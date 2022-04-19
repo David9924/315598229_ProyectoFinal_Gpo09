@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Iluminacion.cpp" />
+    <ClCompile Include="iluminacion2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\lamp.frag" />

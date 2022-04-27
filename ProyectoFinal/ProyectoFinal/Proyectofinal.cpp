@@ -182,11 +182,18 @@ int main()
 
 	Shader lightingShader("Shaders/lighting.vs", "Shaders/lighting.frag");
 	Shader lampShader("Shaders/lamp.vs", "Shaders/lamp.frag");
+	Shader anim("Shaders/anim2.vs", "Shaders/anim2.frag");
 	
 	Model Piso((char*)"Models/Esfera/Piso.obj");
 	Model Mesa((char*)"Models/Mesa/mesa.obj");
 	Model Box((char*)"Models/Box/Box.obj");
 	Model Espada((char*)"Models/Espada/Espada.obj");
+	Model Jarron((char*)"Models/Jarron/Jarron.obj");
+	Model Cofreab((char*)"Models/Cofre/Cofreab.obj");
+	Model Cofreabaj((char*)"Models/Cofre/Cofreabaj.obj");
+	Model Navy((char*)"Models/Navy/navycuerpo.obj");
+	Model Navyala((char*)"Models/Navy/navyala1.obj");
+	Model Navyala2((char*)"Models/Navy/navyala2.obj");
 
 
 
@@ -470,25 +477,84 @@ int main()
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(model, glm::vec3(0.0f, 0.3f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 		Mesa.Draw(lightingShader);
 		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 10.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		//Espada.Draw(lightingShader);
+		//model = glm::translate(model, glm::vec3(10.0f, -1.0f, 0.0f));
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		//Jarron.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(model, glm::vec3(-5.0f, 1.2f, 0.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		Cofreab.Draw(lightingShader);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 2.0f));
+		Cofreabaj.Draw(lightingShader);
+
+		//Navy 
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		Navy.Draw(anim);
+		glUniform3f(glGetUniformLocation(anim.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 2.0f));
+		Navyala.Draw(anim);
+
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 2.0f));
+		Navyala2.Draw(anim);
+
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::translate(model, glm::vec3(15.0f, 2.0f, 0.0f));
+		
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		Espada.Draw(lightingShader);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::translate(model, glm::vec3(10.0f, 0.5f, 10.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		Jarron.Draw(lightingShader);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		
 		//Esfera.Draw(lightingShader);
 
 		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		////Esfera1
+		//Esfera1
 		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(15.0f, 0.0f, 0.0f));
 		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0,1.0,0.0,0.75);
-	 //   Mesa.Draw(lightingShader);
+		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 0.2,0.2,0.0,0.75);
+	 //   Navy.Draw(lightingShader);
 		//
 		////Esfera2
 		//model = glm::mat4(1);

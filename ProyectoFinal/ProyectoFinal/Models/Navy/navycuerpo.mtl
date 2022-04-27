@@ -1,35 +1,37 @@
-newmtl lambert2SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd nav.jpg
-Ni 1.00
-newmtl lambert3SG
+newmtl navyala1:lambert3SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd claro.jpg
 Ni 1.00
-newmtl lambert4SG
+newmtl navyala1:lambert4SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd claro.jpg
 Ni 1.00
-newmtl lambert5SG
+newmtl navyala2:lambert5SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd claro.jpg
 Ni 1.00
-newmtl lambert6SG
+newmtl navyala2:lambert6SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd claro.jpg
 Ni 1.00
+newmtl phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Sin_nombre.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00

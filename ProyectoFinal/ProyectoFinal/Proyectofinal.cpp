@@ -194,6 +194,7 @@ int main()
 	Model Navy((char*)"Models/Navy/navycuerpo.obj");
 	Model Navyala((char*)"Models/Navy/navyala1.obj");
 	Model Navyala2((char*)"Models/Navy/navyala2.obj");
+	Model Cama((char*)"Models/Cama/Cama.obj");
 
 
 
@@ -541,6 +542,15 @@ int main()
 		glBindVertexArray(VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		Jarron.Draw(lightingShader);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(10.0f, 0.6f, 5.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		Cama.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 		
 		//Esfera.Draw(lightingShader);

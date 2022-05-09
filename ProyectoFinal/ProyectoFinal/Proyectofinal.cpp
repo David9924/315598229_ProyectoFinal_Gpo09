@@ -195,7 +195,9 @@ int main()
 	Model Navyala((char*)"Models/Navy/navyala1.obj");
 	Model Navyala2((char*)"Models/Navy/navyala2.obj");
 	Model Cama((char*)"Models/Cama/Cama.obj");
-
+	Model Link((char*)"Models/LinkFigura/LINK.obj");
+	Model Casa((char*)"Models/Casa/Casa.obj");
+	Model Ventana((char*)"Models/Casa/Ventana.obj");
 
 
 	// First, set the container's VAO (and VBO)
@@ -479,7 +481,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.3f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 7.2f, 11.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 		Mesa.Draw(lightingShader);
@@ -493,8 +495,8 @@ int main()
 		//Jarron.Draw(lightingShader);
 
 		model = glm::mat4(1);
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-		model = glm::translate(model, glm::vec3(-5.0f, 1.2f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(1.7f, 15.1f, 18.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -502,13 +504,13 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 2.0f));
+		model = glm::translate(model, glm::vec3(1.7f, 15.1f, 18.0f));
 		Cofreabaj.Draw(lightingShader);
 
 		//Navy 
 		model = glm::mat4(1);
-		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 10.0f));
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		model = glm::translate(model, glm::vec3(-5.0f, 57.2f, 55.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -516,18 +518,18 @@ int main()
 		glUniform3f(glGetUniformLocation(anim.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 2.0f));
+		model = glm::translate(model, glm::vec3(-5.0f, 57.2f, 55.0f));
 		Navyala.Draw(anim);
 
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(5.0f, 1.2f, 2.0f));
+		model = glm::translate(model, glm::vec3(-5.0f, 57.2f, 55.0f));
 		Navyala2.Draw(anim);
 
 		model = glm::mat4(1);
-		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-		model = glm::translate(model, glm::vec3(15.0f, 2.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+		model = glm::translate(model, glm::vec3(0.0f, 40.2f, 53.0f));
 		
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
@@ -537,7 +539,7 @@ int main()
 
 		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-		model = glm::translate(model, glm::vec3(10.0f, 0.5f, 10.0f));
+		model = glm::translate(model, glm::vec3(10.0f, 28.5f, 50.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -546,12 +548,44 @@ int main()
 
 		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		model = glm::translate(model, glm::vec3(10.0f, 0.6f, 5.0f));
+		model = glm::translate(model, glm::vec3(-0.2f, 14.6f, 28.5f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		Cama.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		//Link
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 7.9f, 8.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		Link.Draw(lightingShader);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		//Casa
+
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 8.0f, 20.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		Casa.Draw(lightingShader);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
+		//Ventana
+		model = glm::mat4(1);
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 8.0f, 20.0f));
+		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		Ventana.Draw(lightingShader);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
 		
 		//Esfera.Draw(lightingShader);
 

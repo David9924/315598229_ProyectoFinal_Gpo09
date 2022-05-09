@@ -1,26 +1,16 @@
 ﻿  Proyectofinal.cpp
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(227,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(262,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
-          with
-          [
-              T=float
-          ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(263,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
-          with
-          [
-              T=float
-          ]
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(229,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
 C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(264,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(308,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(265,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(309,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(266,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -30,12 +20,12 @@ C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\Pr
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(354,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(311,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(355,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(312,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -45,12 +35,12 @@ C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\Pr
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(400,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(357,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(401,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(358,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -60,12 +50,22 @@ C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\Pr
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(797,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(798,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(802,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(803,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(805,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(806,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(403,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(404,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(831,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(832,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(836,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(837,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(839,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(840,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
 soil2-debug.lib(etc1_utils.obj) : warning LNK4099: no se encontró PDB 'soil2-debug.pdb' con 'soil2-debug.lib(etc1_utils.obj)' o en 'C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\Debug\soil2-debug.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 soil2-debug.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'soil2-debug.pdb' con 'soil2-debug.lib(image_DXT.obj)' o en 'C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\Debug\soil2-debug.pdb'; se vinculará el objeto sin tener en cuenta información de depuración

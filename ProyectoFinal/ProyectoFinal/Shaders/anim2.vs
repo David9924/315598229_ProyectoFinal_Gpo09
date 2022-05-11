@@ -17,7 +17,7 @@ void main()
 {
   float distance = length(aPos);
   float effect = sin(amplitude*distance+time);
-  gl_Position = projection*view*model*vec4(aPos.x+effect,aPos.y, aPos.z,1);
+  gl_Position = projection*view*model*vec4(aPos.x,aPos.y+effect, aPos.z,1);
   TexCoords=vec2(aTexCoords.x,aTexCoords.y);
 
 }

@@ -1,5 +1,14 @@
+
+// Gómez Serna Carlos David
+// 315598229
+// Computación Grafica e Interacción Humano Computadora 
+// GPO09
+
+//Se manda a llamar todas las librerias y archivos que utilizamos para el proyecto ////
+
+
 #include <iostream>
-#include <cmath>
+#include <cmath>                  
 
 // GLEW
 #include <GL/glew.h>
@@ -23,27 +32,28 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Texture.h"
 
-// Function prototypes
-void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);
-void MouseCallback(GLFWwindow *window, double xPos, double yPos);
-void DoMovement();
-void animacion();
+// Function prototypes // Se crean las funciones que utilizaremos en nuestro ambiente, en este caso son 4.
+void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode); //KeyCallback para mandar a llamar las teclas.
+void MouseCallback(GLFWwindow *window, double xPos, double yPos); //MouseCallBack se utiliza para el manejo de la camara
+void DoMovement(); // DoMovement se utiliza para crear animaciones y mandarlos a llamar con las teclas
+void animacion(); //Esta función se utilizara para la animación compleja
 
-// Window dimensions
+// Window dimensions //Colocamos las dimensiones de la ventana ejecutable.
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
-// Camera
-Camera  camera(glm::vec3(0.0f, 20.0f, 3.0f));
+// Camera 
+Camera  camera(glm::vec3(0.0f, 20.0f, 3.0f)); //Se configura la posición de la camara
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 bool firstMouse = true;
-// Light attributes
+// Light attributes     
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
-glm::vec3 PosIni(-5.0f, 17.2f, -8.0f);
-
+glm::vec3 PosIni(-4.0f, 17.2f, -8.0f);
+//Creamos las variables que utilizaremos
 bool active;
 bool active2;
 bool active3;
@@ -53,7 +63,9 @@ float rot1 = 0.0f;
 float rot2 = 0.0f;
 bool anim = false;
 bool anim2 = false;
-//Animacion coche
+
+//Animacion Navy //Creamos las variables que utilizaremos para la animación compleja. 
+//Se inicializan tres variables en cero. 
 float movKitX = 0.0;
 float movKitZ = 0.0;
 float rotKit = 0.0;
@@ -65,7 +77,7 @@ bool recorrido3 = false;
 bool recorrido4 = false;
 bool recorrido5 = false;
 
-// Positions of the point lights
+// Positions of the point lights //Posición de los puntos de luz. 
 glm::vec3 pointLightPositions[] = {
 	glm::vec3(0.0f,22.0f, -1.0f),
 	glm::vec3(0.0f,22.0f, -1.0f),
@@ -88,13 +100,13 @@ glm::vec3 pointLightPositions2[] = {
 };
 
 glm::vec3 pointLightPositions3[] = {
-	glm::vec3(0.0f, 0.0f, 10.0f),
-	glm::vec3(0.0f, 0.0f, 10.0f),
-	glm::vec3(0.0f, 0.0f, 10.0f),
-	glm::vec3(0.0f, 0.0f, 10.0f)
+	glm::vec3(0.0f,22.0f, -3.0f),
+	glm::vec3(0.0f,22.0f, -3.0f),
+	glm::vec3(0.0f,22.0f,  -3.0f),
+	glm::vec3(0.0f,22.0f, -3.0f)
 };
 
-float vertices[] = {
+float vertices[] = { //Se crean los vertices para los pointlights //Make pointlights vertex
 	 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -147,8 +159,8 @@ glm::vec3 Light4 = glm::vec3(0);
 
 
 // Deltatime
-GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
-GLfloat lastFrame = 0.0f;  	// Time of last frame
+GLfloat deltaTime = 0.0f;	// Time between current frame and last frame  //Tiempo entre el primer frame y el ultimo. 
+GLfloat lastFrame = 0.0f;  	// Time of last frame  //Tiempo del ultimo frame
 
 int main()
 {
@@ -161,8 +173,8 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
-	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Iluminacion 2", nullptr, nullptr);
+	// Create a GLFWwindow object that we can use for GLFW's functions //Se crea el objeto GLFWwindoes para poder usar las funciones GLFW
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Proyecto Final 315598229_GPO9", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -176,7 +188,7 @@ int main()
 
 	glfwGetFramebufferSize(window, &SCREEN_WIDTH, &SCREEN_HEIGHT);
 
-	// Set the required callback functions
+	// Set the required callback functions //Mandamos a llamar la función con las siguientes glfw
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetCursorPosCallback(window, MouseCallback);
 
@@ -185,21 +197,22 @@ int main()
 
 	// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
 	glewExperimental = GL_TRUE;
-	// Initialize GLEW to setup the OpenGL Function pointers
+	// Initialize GLEW to setup the OpenGL Function pointers // Se inicializan GLEW 
 	if (GLEW_OK != glewInit())
 	{
 		std::cout << "Failed to initialize GLEW" << std::endl;
 		return EXIT_FAILURE;
 	}
 
-	// Define the viewport dimensions
+	// Define the viewport dimensions // Se definen las dimensiones del viewport
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-
+	//Se manda a llamar a los objetos que utilizaremos // The models are called 
 
 	Shader lightingShader("Shaders/lighting.vs", "Shaders/lighting.frag");
 	Shader lampShader("Shaders/lamp.vs", "Shaders/lamp.frag");
 	Shader anim("Shaders/anim2.vs", "Shaders/anim2.frag");
+	Shader SkyBoxshader("Shaders/SkyBox.vs", "Shaders/SkyBox.frag");
 	
 	Model Piso((char*)"Models/Esfera/Piso2.obj");
 	Model Mesa((char*)"Models/Mesa/mesa.obj");
@@ -225,7 +238,50 @@ int main()
 	Model Ventana((char*)"Models/Casa/Ventana.obj");
 	Model mesa2((char*)"Models/Hogar/mesa.obj");
 
+	GLfloat skyboxVertices[] = {   //Se crean los vertices para el skybox. // Vertex are created for the skybox 
+		// Positions
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
 
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f
+	};
 
 
 	// First, set the container's VAO (and VBO)
@@ -247,23 +303,45 @@ int main()
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0);
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "material.specular"),1);
 
+	//SkyBox  //Se crea el VBO de SkyBox
+	GLuint skyboxVBO, skyboxVAO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+
+	// Load textures //Se cargan las texturas del Skybox
+	vector<const GLchar*> faces;
+	faces.push_back("SkyBox/right.tga");
+	faces.push_back("SkyBox/left.tga");
+	faces.push_back("SkyBox/top.tga");
+	faces.push_back("SkyBox/bottom.tga");
+	faces.push_back("SkyBox/back.tga");
+	faces.push_back("SkyBox/front.tga");
+
+	GLuint cubemapTexture = TextureLoading::LoadCubemap(faces);
+
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
 
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{
 
-		// Calculate deltatime of current frame
+		// Calculate deltatime of current frame //Calculos del deltatime
 		GLfloat currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+		//Checamos si algun evento ha sido activado (tecla, movimiento de mouse ect.) y se manda a llamar la función responsable
 		glfwPollEvents();
 		DoMovement();
 		animacion();
 
-		// Clear the colorbuffer
+		// Clear the colorbuffer //Se limpia el colorbuffer
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -272,21 +350,23 @@ int main()
 
 
 
-		//Load Model
+		//Load Model //Cargando modelos
 
 
-		// Use cooresponding shader when setting uniforms/drawing objects
+		// Use cooresponding shader when setting uniforms/drawing objects 
+		//Se usa el shader correspondiente para mandar a dibujar los objetos.
 		lightingShader.Use();
 		GLint viewPosLoc = glGetUniformLocation(lightingShader.Program, "viewPos");
 		glUniform3f(viewPosLoc, camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
 
 
-		// Directional light
+		// Directional light //Direcciones de luz
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.1f, 0.1f, 0.1f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.1f, 0.1f, 0.1f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.4f, 0.4f, 0.4f);
 
+		//Se crean los point lights que en total son 4.
 
 		// Point light 1
 		glm::vec3 lightColor;
@@ -483,10 +563,13 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.outerCutOff"), glm::cos(glm::radians(15.0f)));
 
 
+
 		// Set material properties
+		//Se crena las propiedades del material. 
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 32.0f);
 
 		// Create camera transformations
+		//Se crea la transformación de la camara
 		glm::mat4 view;
 		view = camera.GetViewMatrix();
 
@@ -496,13 +579,16 @@ int main()
 		GLint projLoc = glGetUniformLocation(lightingShader.Program, "projection");
 
 		// Pass the matrices to the shader
+		//Pasamos las matrices al shader
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 
 		glm::mat4 model(1);
 
+		// A partir de este punto, se dibujan los modelos que mandamos a llamar en funciones anteriores 
 
+		//Mdels that we send to call in previous functions are drawn
 
 		//Carga de modelo 
 		view = camera.GetViewMatrix();
@@ -534,8 +620,8 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		Cofreabaj.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		
 		//Navy 
-
 
 		model = glm::mat4(1);
 		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
@@ -586,17 +672,20 @@ int main()
 		Cama.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
+		//Link
+
 		//LinkCabeza
 
 
 		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		Linkcab.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		
 		//LinkCuerpo
 
 		model = glm::mat4(1);
@@ -662,7 +751,6 @@ int main()
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		Casa.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
@@ -673,9 +761,7 @@ int main()
 		model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(-rot2), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-
 		glBindVertexArray(VAO);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
 		Ventana.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
@@ -683,59 +769,27 @@ int main()
 		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		model = glm::translate(model, glm::vec3(-1.2f, 3.6f, -1.4f));
-		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		glBindVertexArray(VAO);
 		mesa2.Draw(lightingShader);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
 
-		
-		//Esfera.Draw(lightingShader);
-
 		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		//Esfera1
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(15.0f, 0.0f, 0.0f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 0.2,0.2,0.0,0.75);
-	 //   Navy.Draw(lightingShader);
-		//
-		////Esfera2
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 0.0, 0.75);
-		//Mesa.Draw(lightingShader);
 
-		////Esfera3
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(10.0f, 0.0f, 10.0f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 0.0, 0.75);
-		//Mesa.Draw(lightingShader);
-
-		////Esfera4
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 10.0f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 0.0, 0.75);
-		//Mesa.Draw(lightingShader);
 
 		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0, 1.0, 1.0, 1.0);
 		glBindVertexArray(0);
 	
 
-		// Also draw the lamp object, again binding the appropriate shader
+		// Also draw the lamp object, again binding the appropriate shader 
+		//Además de dibujar el objeto lamp, lo unimos con el shader apropiado.
 		lampShader.Use();
 		// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
+		// Obtenemos la ubicación de los objetos de las matrices del lamp shader
 		modelLoc = glGetUniformLocation(lampShader.Program, "model");
 		viewLoc = glGetUniformLocation(lampShader.Program, "view");
 		projLoc = glGetUniformLocation(lampShader.Program, "projection");
@@ -748,38 +802,54 @@ int main()
 		model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		// Draw the light object (using light's vertex attributes)
+		//Dibujamos el light object (utilizando los vertices creados anteriormente)
 		for (GLuint i = 0; i < 4; i++)
 		{
 			model = glm::mat4(1);
 			model = glm::translate(model, pointLightPositions[i]);
-			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube //Creamos un pequeño cubo
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 
 			model = glm::mat4(1);
 			model = glm::translate(model, pointLightPositions1[i]);
-			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube // Creamos un pequeño cubo
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 
 			model = glm::mat4(1);
 			model = glm::translate(model, pointLightPositions2[i]);
-			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube //Creamos un pequeño cubo
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 
 			model = glm::mat4(1);
 			model = glm::translate(model, pointLightPositions3[i]);
-			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
+			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube //Creamos un pequeño cubo
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 		glBindVertexArray(0);
 
+		// Draw skybox as last //Se dibuja el skybox 
+		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+		SkyBoxshader.Use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix 
+																//Quitamos cualquier traslasión del componente vista en la matriz
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		// skybox cube //Creamos el cubo skybox
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS); // Set depth function back to default
 
 
 		// Swap the screen buffers
@@ -787,19 +857,22 @@ int main()
 	}
 
 
-	// Terminate GLFW, clearing any resources allocated by GLFW.
+	// Terminate GLFW, clearing any resources allocated by GLFW. //Terminamos GLFW, limpiando cualquier recurso.
 	glfwTerminate();
 
+	glDeleteVertexArrays(1, &skyboxVAO);
+	glDeleteBuffers(1, &skyboxVBO);
 
 
 	return 0;
 }
 
-// Moves/alters the camera positions based on user input
+// Moves/alters the camera positions based on user input 
+//Movimientos/alteración de la posición de la camara basada en las entradas
 void DoMovement()
 {
 
-	// Camera controls
+	// Camera controls //Control de la camara
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
 	{
 		camera.ProcessKeyboard(FORWARD, deltaTime);
@@ -854,15 +927,19 @@ void DoMovement()
 	{
 		pointLightPositions[0].z += 0.01f;
 	}
+
+	//La variable bool camino aparecera como true al ingresar la tecla O
 	if (keys[GLFW_KEY_O])
 	{
 		camino = true;
 	}
+	//En caso contrario el bool camino aparecera como false al presionar la tecla P
 	if (keys[GLFW_KEY_P])
 	{
 		camino = false;
 	}
 
+	//Se crea una animación para que el cofre y la ventana cierren y abran. 
 	if (anim && rot1 < 45) {
 		rot1 += 0.5f;
 	}
@@ -879,10 +956,11 @@ void DoMovement()
 	
 }
 
+//En esta función, se pondra la animación compleja de un modelo.
 void animacion()
 {
 
-	//Movimiento del coche
+	//Movimiento de Navi
 	if (camino)
 	{
 		if (recorrido1)
@@ -898,7 +976,7 @@ void animacion()
 		{
 			rotKit = 90;
 			movKitX += 0.1f;
-			if (movKitX > 10)
+			if (movKitX > 8)
 			{
 				recorrido2 = false;
 				recorrido3 = true;
@@ -942,7 +1020,7 @@ void animacion()
 	}
 }
 
-// Is called whenever a key is pressed/released via GLFW
+// Is called whenever a key is pressed/released via GLFW //Se manda a llamar cuando una tecla es presionada
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode)
 {
 	if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action)
@@ -973,6 +1051,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		else
 		{
 			Light1 = glm::vec3(0);//Cuado es solo un valor en los 3 vectores pueden dejar solo una componente
+								  // When is only one value in the 3 vectors can leave only one component 
 		}
 
 		active2 = !active2;
@@ -984,6 +1063,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		else
 		{
 			Light2 = glm::vec3(0);//Cuado es solo un valor en los 3 vectores pueden dejar solo una componente
+								  // When is only one value in the 3 vectors can leave only one component 
 		}
 
 		active3 = !active3;
@@ -995,6 +1075,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		else
 		{
 			Light3 = glm::vec3(0);//Cuado es solo un valor en los 3 vectores pueden dejar solo una componente
+			                       //When is only one value in the 3 vectors can leave only one component
 		}
 
 		active4 = !active4;
@@ -1006,6 +1087,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		else
 		{
 			Light4 = glm::vec3(0);//Cuado es solo un valor en los 3 vectores pueden dejar solo una componente
+								  // When is only one value in the 3 vectors can leave only one component 
 		}
 
 	}
@@ -1017,6 +1099,8 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		anim2 = !anim2;
 }
 
+//Se manda a llamar esta función cuando se utiliza el mouse. Quiere decir que con esta función podemos manejar el mouse libremente en el ambiente.
+//This function is called when the mouse is used. It means that with this function we can handle the mouse freely in the environment. 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 {
 	if (firstMouse)

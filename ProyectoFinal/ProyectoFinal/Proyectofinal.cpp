@@ -82,9 +82,10 @@ bool anim2 = false;
 
 // Keyframes
 
-float rotcuerp,posX = PosIni2.x, posY = PosIni2.y, posZ = PosIni2.z, rotRodIzq = 0, rotRodDer, rotBraIzq, rotBraDer, rotmanoder, rotmanoizq;
+float rotcuerp,posX = PosIni2.x, posY = PosIni2.y, posZ = PosIni2.z, rotRodIzq = 0, rotRodDer, rotBraIzq, rotBraDer,
+rotmanoder, rotmanoizq,rotcab;
 
-#define MAX_FRAMES 9
+#define MAX_FRAMES 20
 int i_max_steps = 190;
 int i_curr_steps = 0;
 typedef struct _frame
@@ -104,12 +105,17 @@ typedef struct _frame
 	float rotBraDer;
 	float rotmanoder;
 	float rotmanoizq;
+	float rotmuizq;
+	float rormuder;
+	float rotcab;
 	float rotInc3;
 	float rotInc4;
 	float rotInc5;
 	float rotInc6;
 	float rotcuerp;
 	float rotInc7;
+	float rotInc8;
+
 
 }FRAME;
 
@@ -182,6 +188,8 @@ void saveFrame(void)
 	KeyFrame[FrameIndex].rotBraDer = rotmanoizq;
 	KeyFrame[FrameIndex].rotcuerp = rotcuerp;
 
+	KeyFrame[FrameIndex].rotcab = rotcab;
+
 	FrameIndex++;
 }
 
@@ -201,6 +209,8 @@ void resetElements(void)
 	rotmanoizq = KeyFrame[0].rotmanoizq;
 
 	rotcuerp = KeyFrame[0].rotcuerp;
+
+	rotcab = KeyFrame[0].rotcab;
 }
 
 void interpolation(void)
@@ -220,6 +230,8 @@ void interpolation(void)
 	KeyFrame[playIndex].rotInc6 = (KeyFrame[playIndex + 1].rotmanoizq - KeyFrame[playIndex].rotmanoizq) / i_max_steps;
 
 	KeyFrame[playIndex].rotInc7 = (KeyFrame[playIndex + 1].rotmanoizq - KeyFrame[playIndex].rotcuerp) / i_max_steps;
+
+	KeyFrame[playIndex].rotInc8 = (KeyFrame[playIndex + 1].rotmanoizq - KeyFrame[playIndex].rotcab) / i_max_steps;
 
 }
 
@@ -380,6 +392,8 @@ int main()
 		KeyFrame[i].rotBraDer = 0;
 		KeyFrame[i].rotmanoder = 0;
 		KeyFrame[i].rotmanoizq = 0;
+		KeyFrame[i].rotcuerp = 0;
+		KeyFrame[i].rotcab = 0;
 		KeyFrame[i].rotInc = 0;
 		KeyFrame[i].rotInc2 = 0;
 		KeyFrame[i].rotInc3 = 0;
@@ -387,6 +401,7 @@ int main()
 		KeyFrame[i].rotInc5 = 0;
 		KeyFrame[i].rotInc6 = 0;
 		KeyFrame[i].rotInc7 = 0;
+		KeyFrame[i].rotInc8 = 0;
 	}
 
 
@@ -849,7 +864,8 @@ int main()
 		tmp = model = glm::translate(model, glm::vec3(0, 1, 0));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkcuerpo1.Draw(lightingShader);
 
@@ -864,8 +880,10 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(-rotRodIzq), glm::vec3(0.0f, 0.0f, 1.0f));
+
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkpierna1.Draw(lightingShader);
 
@@ -874,8 +892,10 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(-rotRodDer), glm::vec3(0.0f, 0.0f, 1.0f));
+
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkpierna2.Draw(lightingShader);
 
@@ -885,8 +905,10 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(-rotBraDer), glm::vec3(0.0f, 0.0f, 1.0f));
+
 		//model = glm::translate(model, glm::vec3(-0.75f, 2.5f, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkbrazo1.Draw(lightingShader);
@@ -897,8 +919,10 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(-rotmanoder), glm::vec3(1.0f, 0.0f, 1.0f));
+
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkmano1.Draw(lightingShader);
 
@@ -908,7 +932,8 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(-rotBraIzq), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkbrazo2.Draw(lightingShader);
@@ -919,7 +944,8 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, glm::radians(-rotmanoizq), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkmano2.Draw(lightingShader);
@@ -931,7 +957,9 @@ int main()
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
 		model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(-rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotcab), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkcab.Draw(lightingShader);
 
@@ -1100,7 +1128,23 @@ void DoMovement()
 	if (keys[GLFW_KEY_1])
 	{
 
-		rotcuerp += 1;
+		rot += 1;
+
+	}
+
+	if (keys[GLFW_KEY_V])
+	{
+
+		if (rotcuerp < 90.0f)
+			rotcuerp += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_B])
+	{
+
+		if (rotcuerp > -90.0f)
+			rotcuerp -= 1.0f;
 
 	}
 
@@ -1187,6 +1231,22 @@ void DoMovement()
 			rotmanoizq += 1.0f;
 
 	}
+
+	if (keys[GLFW_KEY_Z])
+	{
+		if (rotcab < 5.0f)
+			rotcab += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_X])
+	{
+		if (rotcab > -5.0f)
+			rotcab -= 1.0f;
+
+	}
+
+
 
 	//Mov Personaje
 	if (keys[GLFW_KEY_Y])
@@ -1300,7 +1360,8 @@ void animacion()
 			rotRodDer += KeyFrame[playIndex].rotInc2;
 			rotBraIzq += KeyFrame[playIndex].rotInc3;
 			rotBraDer += KeyFrame[playIndex].rotInc4;
-
+			rotcab += KeyFrame[playIndex].rotInc8;
+			rotcuerp += KeyFrame[playIndex].rotInc7;
 			i_curr_steps++;
 		}
 

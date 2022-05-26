@@ -34,6 +34,12 @@
 #include "Model.h"
 #include "Texture.h"
 
+//Librería de audio:
+
+#include <irrKlang.h>
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
+using namespace irrklang;
+
 // Function prototypes // Se crean las funciones que utilizaremos en nuestro ambiente, en este caso son 4.
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode); //KeyCallback para mandar a llamar las teclas.
 void MouseCallback(GLFWwindow *window, double xPos, double yPos); //MouseCallBack se utiliza para el manejo de la camara
@@ -50,9 +56,19 @@ GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 bool firstMouse = true;
+
+
+
 // Light attributes     
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 glm::vec3 PosIni(-4.0f, 17.2f, -8.0f);
+glm::vec3 PosIni2(0.0f, 0.7f, 1.5f);
+const float amplitude = 0.04;
+const float frequency = 4.0;
+const float PI = 3.14159;
+float dista = 3.0f;
+float effect = sin(amplitude * dista);
+
 //Creamos las variables que utilizaremos
 bool active;
 bool active2;
@@ -64,11 +80,52 @@ float rot2 = 0.0f;
 bool anim = false;
 bool anim2 = false;
 
+// Keyframes
+
+float rotcuerp,posX = PosIni2.x, posY = PosIni2.y, posZ = PosIni2.z, rotRodIzq = 0, rotRodDer, rotBraIzq, rotBraDer, rotmanoder, rotmanoizq;
+
+#define MAX_FRAMES 9
+int i_max_steps = 190;
+int i_curr_steps = 0;
+typedef struct _frame
+{
+	//Variables para GUARDAR Key Frames
+	float posX;		//Variable para PosicionX
+	float posY;		//Variable para PosicionY
+	float posZ;		//Variable para PosicionZ
+	float incX;		//Variable para IncrementoX
+	float incY;		//Variable para IncrementoY
+	float incZ;		//Variable para IncrementoZ
+	float rotRodIzq;
+	float rotRodDer;
+	float rotInc;
+	float rotInc2;
+	float rotBraIzq;
+	float rotBraDer;
+	float rotmanoder;
+	float rotmanoizq;
+	float rotInc3;
+	float rotInc4;
+	float rotInc5;
+	float rotInc6;
+	float rotcuerp;
+	float rotInc7;
+
+}FRAME;
+
+FRAME KeyFrame[MAX_FRAMES];
+int FrameIndex = 0;			//introducir datos
+bool play = false;
+int playIndex = 0;
+
+
+
 //Animacion Navy //Creamos las variables que utilizaremos para la animación compleja. 
 //Se inicializan tres variables en cero. 
 float movKitX = 0.0;
 float movKitZ = 0.0;
 float rotKit = 0.0;
+float r = 90.0;
 
 bool camino = false;
 bool recorrido1 = true;
@@ -105,6 +162,68 @@ glm::vec3 pointLightPositions3[] = {
 	glm::vec3(0.0f,22.0f,  -3.0f),
 	glm::vec3(0.0f,22.0f, -3.0f)
 };
+
+void saveFrame(void)
+{
+
+	printf("frameindex %d\n", FrameIndex);
+
+	KeyFrame[FrameIndex].posX = posX;
+	KeyFrame[FrameIndex].posY = posY;
+	KeyFrame[FrameIndex].posZ = posZ;
+
+	KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+	KeyFrame[FrameIndex].rotRodDer = rotRodDer;
+
+	KeyFrame[FrameIndex].rotBraIzq = rotBraIzq;
+	KeyFrame[FrameIndex].rotBraDer = rotBraDer;
+
+	KeyFrame[FrameIndex].rotBraDer = rotmanoder;
+	KeyFrame[FrameIndex].rotBraDer = rotmanoizq;
+	KeyFrame[FrameIndex].rotcuerp = rotcuerp;
+
+	FrameIndex++;
+}
+
+void resetElements(void)
+{
+	posX = KeyFrame[0].posX;
+	posY = KeyFrame[0].posY;
+	posZ = KeyFrame[0].posZ;
+
+	rotRodIzq = KeyFrame[0].rotRodIzq;
+	rotRodDer = KeyFrame[0].rotRodDer;
+
+	rotBraIzq = KeyFrame[0].rotBraIzq;
+	rotBraDer = KeyFrame[0].rotBraDer;
+
+	rotmanoder = KeyFrame[0].rotmanoder;
+	rotmanoizq = KeyFrame[0].rotmanoizq;
+
+	rotcuerp = KeyFrame[0].rotcuerp;
+}
+
+void interpolation(void)
+{
+
+	KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
+	KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
+	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
+
+	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
+	KeyFrame[playIndex].rotInc2 = (KeyFrame[playIndex + 1].rotRodDer - KeyFrame[playIndex].rotRodDer) / i_max_steps;
+
+	KeyFrame[playIndex].rotInc3 = (KeyFrame[playIndex + 1].rotBraIzq - KeyFrame[playIndex].rotBraIzq) / i_max_steps;
+	KeyFrame[playIndex].rotInc4 = (KeyFrame[playIndex + 1].rotBraDer - KeyFrame[playIndex].rotBraDer) / i_max_steps;
+
+	KeyFrame[playIndex].rotInc5 = (KeyFrame[playIndex + 1].rotmanoder - KeyFrame[playIndex].rotmanoder) / i_max_steps;
+	KeyFrame[playIndex].rotInc6 = (KeyFrame[playIndex + 1].rotmanoizq - KeyFrame[playIndex].rotmanoizq) / i_max_steps;
+
+	KeyFrame[playIndex].rotInc7 = (KeyFrame[playIndex + 1].rotmanoizq - KeyFrame[playIndex].rotcuerp) / i_max_steps;
+
+}
+
+
 
 float vertices[] = { //Se crean los vertices para los pointlights //Make pointlights vertex
 	 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -176,6 +295,15 @@ int main()
 	// Create a GLFWwindow object that we can use for GLFW's functions //Se crea el objeto GLFWwindoes para poder usar las funciones GLFW
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Proyecto Final 315598229_GPO9", nullptr, nullptr);
 
+	//Inicio de música de fondo
+	irrklang::ISoundEngine* music = irrklang::createIrrKlangDevice();
+
+	if (!music)
+		return 0; //Error con la música de fondo
+	
+
+
+
 	if (nullptr == window)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -237,6 +365,34 @@ int main()
 	Model Casa((char*)"Models/Casa/Casa.obj");
 	Model Ventana((char*)"Models/Casa/Ventana.obj");
 	Model mesa2((char*)"Models/Hogar/mesa.obj");
+
+	//Inicialización de KeyFrames
+
+	for (int i = 0; i < MAX_FRAMES; i++)
+	{
+		KeyFrame[i].posX = 0;
+		KeyFrame[i].incX = 0;
+		KeyFrame[i].incY = 0;
+		KeyFrame[i].incZ = 0;
+		KeyFrame[i].rotRodIzq = 0;
+		KeyFrame[i].rotRodDer = 0;
+		KeyFrame[i].rotBraIzq = 0;
+		KeyFrame[i].rotBraDer = 0;
+		KeyFrame[i].rotmanoder = 0;
+		KeyFrame[i].rotmanoizq = 0;
+		KeyFrame[i].rotInc = 0;
+		KeyFrame[i].rotInc2 = 0;
+		KeyFrame[i].rotInc3 = 0;
+		KeyFrame[i].rotInc4 = 0;
+		KeyFrame[i].rotInc5 = 0;
+		KeyFrame[i].rotInc6 = 0;
+		KeyFrame[i].rotInc7 = 0;
+	}
+
+
+
+
+
 
 	GLfloat skyboxVertices[] = {   //Se crean los vertices para el skybox. // Vertex are created for the skybox 
 		// Positions
@@ -313,6 +469,8 @@ int main()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 
+
+
 	// Load textures //Se cargan las texturas del Skybox
 	vector<const GLchar*> faces;
 	faces.push_back("SkyBox/right.tga");
@@ -325,6 +483,9 @@ int main()
 	GLuint cubemapTexture = TextureLoading::LoadCubemap(faces);
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
+
+	//Reproducir música de fondo
+	music->play2D("Musica\\Kokiri Forest.mp3", true);
 
 	// Game loop
 	while (!glfwWindowShouldClose(window))
@@ -553,9 +714,9 @@ int main()
 		// SpotLight
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.position"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.direction"), camera.GetFront().x, camera.GetFront().y, camera.GetFront().z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 1.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), 1.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"), 1.0f, 1.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"), 0.0f, 0.0f, 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.constant"), 1.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.linear"), 0.35f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.quadratic"), 0.44f);
@@ -591,7 +752,7 @@ int main()
 		//Mdels that we send to call in previous functions are drawn
 
 		//Carga de modelo 
-		view = camera.GetViewMatrix();
+		//view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
@@ -631,16 +792,23 @@ int main()
 
 		Navy.Draw(lightingShader);
 
+
 		model = glm::mat4(1);
 		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
 		model = glm::rotate(model, glm::radians(rotKit), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians((float)glfwGetTime() * 20.0f), glm::vec3(0, 0.0f, 1.0));
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Navyala.Draw(anim);
 
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+
 
 		model = glm::mat4(1);
 		model = glm::translate(model, PosIni + glm::vec3(movKitX, 0, movKitZ));
 		model = glm::rotate(model, glm::radians(rotKit), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians((float)glfwGetTime() * 20.0f), glm::vec3(0.0, 0.0f, r));
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Navyala2.Draw(anim);
 
 		//Espada
@@ -673,74 +841,101 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
 		//Link
+		glm::mat4 tmp = glm::mat4(1.0f); //Temp
+	   //Personaje
+		view = camera.GetViewMatrix();
+		glm::mat4(1);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		tmp = model = glm::translate(model, glm::vec3(0, 1, 0));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Linkcuerpo1.Draw(lightingShader);
 
-		//LinkCabeza
+		//view = camera.GetViewMatrix();
+		//model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		//model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//Linkcuerpo2.Draw(lightingShader);
 
+		//Pierna Izq
+		view = camera.GetViewMatrix();
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(-rotRodIzq), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Linkpierna1.Draw(lightingShader);
 
+		//Pierna Der
+		view = camera.GetViewMatrix();
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotRodDer), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Linkpierna2.Draw(lightingShader);
+
+		//Brazo derecho
+		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		glBindVertexArray(VAO);
-		Linkcab.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
-		
-		//LinkCuerpo
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
-		Linkcuerpo1.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
-		
-		//LinkCuerpo2
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
-		Linkcuerpo2.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
-
-		//LinkMano
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
-		Linkmano1.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
-
-		//LinkBrazo1
-
-		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotBraDer), glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::translate(model, glm::vec3(-0.75f, 2.5f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkbrazo1.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
-		//LinkMano2
-
+		//Mano
+		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
-		Linkmano2.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotmanoder), glm::vec3(1.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Linkmano1.Draw(lightingShader);
 
-		//LinkBrazo2
-
+		//Brazo Izquierdo
+		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotBraIzq), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Linkbrazo2.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 
-		//LinkPierna1
-
+		//Mano2
+		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
-		Linkpierna1.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(-rotmanoizq), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Linkmano2.Draw(lightingShader);
 
-		//LinkPierna2
 
+		//Cabeza
+		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 7.9f, -3.5f));
-		Linkpierna2.Draw(lightingShader);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(tmp, glm::vec3(0.0f, -1.0f, 0.1f));
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::rotate(model, glm::radians(rotcuerp), glm::vec3(0.0f, 1.0f, 0.0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Linkcab.Draw(lightingShader);
+
+
 
 
 		//Casa
@@ -851,9 +1046,11 @@ int main()
 		glBindVertexArray(0);
 		glDepthFunc(GL_LESS); // Set depth function back to default
 
+		//music->drop();
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
+
 	}
 
 
@@ -898,6 +1095,118 @@ void DoMovement()
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 
 
+	}
+
+	if (keys[GLFW_KEY_1])
+	{
+
+		rotcuerp += 1;
+
+	}
+
+	if (keys[GLFW_KEY_2])
+	{
+		if (rotRodIzq < 10.0f)
+			rotRodIzq += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_3])
+	{
+		if (rotRodIzq > -15)
+			rotRodIzq -= 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_4])
+	{
+		if (rotRodDer < 10.0f)
+			rotRodDer += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_5])
+	{
+		if (rotRodDer > -15)
+			rotRodDer -= 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_6])
+	{
+		if (rotBraIzq > -5.0f)
+			rotBraIzq -= 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_7])
+	{
+		if (rotBraIzq < 15)
+			rotBraIzq += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_8])
+	{
+		if (rotBraDer > -5.0f)
+			rotBraDer -= 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_9])
+	{
+		if (rotBraDer < 15)
+			rotBraDer += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_9])
+	{
+		if (rotmanoder < 15.0f)
+			rotmanoder += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_8])
+	{
+		if (rotmanoder > -5.0f)
+			rotmanoder -= 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_6])
+	{
+		if (rotmanoizq > -5.0f)
+			rotmanoizq -= 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_7])
+	{
+		if (rotmanoizq < 15.0f)
+			rotmanoizq += 1.0f;
+
+	}
+
+	//Mov Personaje
+	if (keys[GLFW_KEY_Y])
+	{
+		posZ += 0.2;
+	}
+
+	if (keys[GLFW_KEY_H])
+	{
+		posZ -= 0.2;
+	}
+
+	if (keys[GLFW_KEY_G])
+	{
+		posX -= 0.2;
+	}
+
+	if (keys[GLFW_KEY_J])
+	{
+		posX += 0.2;
 	}
 
 	if (keys[GLFW_KEY_T])
@@ -959,6 +1268,52 @@ void DoMovement()
 //En esta función, se pondra la animación compleja de un modelo.
 void animacion()
 {
+
+	//Movimiento personaje
+
+	if (play)
+	{
+		if (i_curr_steps >= i_max_steps) //end of animation between frames?
+		{
+			playIndex++;
+			if (playIndex > FrameIndex - 2)	//end of total animation?
+			{
+				printf("termina anim\n");
+				playIndex = 0;
+				play = false;
+			}
+			else //Next frame interpolations
+			{
+				i_curr_steps = 0; //Reset counter
+								  //Interpolation
+				interpolation();
+			}
+		}
+		else
+		{
+			//Draw animation
+			posX += KeyFrame[playIndex].incX;
+			posY += KeyFrame[playIndex].incY;
+			posZ += KeyFrame[playIndex].incZ;
+
+			rotRodIzq += KeyFrame[playIndex].rotInc;
+			rotRodDer += KeyFrame[playIndex].rotInc2;
+			rotBraIzq += KeyFrame[playIndex].rotInc3;
+			rotBraDer += KeyFrame[playIndex].rotInc4;
+
+			i_curr_steps++;
+		}
+
+	}
+
+
+
+
+
+
+
+
+
 
 	//Movimiento de Navi
 	if (camino)
@@ -1097,6 +1452,44 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 
 	if (keys[GLFW_KEY_K])
 		anim2 = !anim2;
+
+	if (keys[GLFW_KEY_M])
+	{
+		if (play == false && (FrameIndex > 1))
+		{
+
+			resetElements();
+			//First Interpolation				
+			interpolation();
+
+			play = true;
+			playIndex = 0;
+			i_curr_steps = 0;
+		}
+		else
+		{
+			play = false;
+		}
+
+	}
+
+	if (keys[GLFW_KEY_N])
+	{
+		if (FrameIndex < MAX_FRAMES)
+		{
+			saveFrame();
+		}
+
+	}
+
+
+
+
+
+
+
+
+
 }
 
 //Se manda a llamar esta función cuando se utiliza el mouse. Quiere decir que con esta función podemos manejar el mouse libremente en el ambiente.

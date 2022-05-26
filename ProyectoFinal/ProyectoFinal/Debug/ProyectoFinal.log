@@ -1,69 +1,75 @@
 ﻿  Proyectofinal.cpp
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(334,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(373,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(66,29): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(68,25): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(495,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(534,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(374,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(535,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(375,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(536,21): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(419,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(580,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(420,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(581,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(421,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(582,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(465,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(626,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(466,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(627,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(467,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(628,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(511,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(672,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(512,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(673,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(513,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(674,22): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=float
           ]
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1108,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1109,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1113,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1114,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1116,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1117,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1194,14): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1199,14): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1204,14): warning C4305: '-=': truncamiento de 'double' a 'float'
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1209,14): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1501,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1502,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1506,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1507,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1509,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\ProyectoFinal\Proyectofinal.cpp(1510,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
   ProyectoFinal.vcxproj -> C:\Users\dient\Desktop\Compugrafica\Repositorio\315598229_ProyectoFinal_Gpo09\ProyectoFinal\Debug\ProyectoFinal.exe
